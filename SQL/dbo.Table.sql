@@ -1,0 +1,5 @@
+﻿CREATE TABLE Servizi (
+    ID INT IDENTITY(1,1) PRIMARY KEY,
+    Descrizione NVARCHAR(100) NOT NULL,
+    Prezzo DECIMAL(10, 2) NOT NULL
+);
