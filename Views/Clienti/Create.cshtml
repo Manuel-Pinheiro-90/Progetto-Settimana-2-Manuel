@@ -3,6 +3,7 @@
 <h2>Create Cliente</h2>
 
 <form asp-action="Create">
+    @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <h4>Cliente</h4>
         <hr />
