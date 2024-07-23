@@ -1,7 +1,16 @@
+using Progetto_Settimana_2_Manuel.DAO;
+using Progetto_Settimana_2_Manuel.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services
+    .AddScoped<SqlServerServiceBase>();
+    builder.Services.AddScoped<IClienteDAO, ClienteDAO>();
+
+
 
 var app = builder.Build();
 
