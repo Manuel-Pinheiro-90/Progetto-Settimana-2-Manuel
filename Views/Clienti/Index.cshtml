@@ -71,9 +71,43 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-info">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a>
+                    <a class="btn btn-danger" onclick="deleteCliente(@item.ID)">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+@section scripts{
+
+
+   
+    <script>
+        function deleteCliente(id) {
+            if (confirm("Sicuro di voler eliminare il cliente?")) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Clienti")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.success) {
+                            location.reload();
+                        } else {
+                            alert('Error deleting cliente');
+                        }
+                    },
+                    error: function (err) {
+                        alert('Error: ' + err.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+
+    <!--Link non utile ma lo tengo per promemoria-->
+   <!--https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js-->
+
+
+
+}

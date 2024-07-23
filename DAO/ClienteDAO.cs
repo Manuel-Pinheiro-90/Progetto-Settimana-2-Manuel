@@ -107,6 +107,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
             try
             {
                 using var command = _dbService.GetCommand(conn, CREATE_CLIENTE);
+                command.Transaction = transaction;
                 command.Parameters.Add(new SqlParameter("@CodiceFiscale", cliente.CodiceFiscale));
                 command.Parameters.Add(new SqlParameter("@Cognome", cliente.Cognome));
                 command.Parameters.Add(new SqlParameter("@Nome", cliente.Nome));

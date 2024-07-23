@@ -93,24 +93,27 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(cliente);
         }
 
-        // GET: Clienti/Delete/5
-        public IActionResult Delete(int id)
-        {
-            var cliente = _clienteDAO.GetById(id);
-            if (cliente == null)
-            {
-                return NotFound();
-            }
-            return View(cliente);
-        }
+
 
         // POST: Clienti/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        
+
+
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
             _clienteDAO.Delete(id);
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true });
         }
+
+
+
+
+
+
+
+
+
+
     }
 }
