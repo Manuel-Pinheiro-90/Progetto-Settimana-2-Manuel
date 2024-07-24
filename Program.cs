@@ -9,7 +9,10 @@ builder.Services.AddControllersWithViews();
 builder.Services
     .AddScoped<SqlServerServiceBase>();
     builder.Services.AddScoped<IClienteDAO, ClienteDAO>();
-
+builder.Services.AddScoped<ICameraDAO, CameraDAO>();    
+builder.Services.AddScoped<IPrenotazioneDAO, PrenotazioneDAO>();
+builder.Services.AddScoped<IServizioDAO, ServizioDAO>();
+builder.Services.AddScoped<IPrenotazioneServizioDAO, PrenotazioneServizioDAO>();
 
 
 var app = builder.Build();

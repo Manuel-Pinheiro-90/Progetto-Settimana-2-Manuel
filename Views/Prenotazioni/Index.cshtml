@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Progetto_Settimana_2_Manuel.Models.Prenotazione>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+          
+          <th>
+                @Html.DisplayNameFor(model => model.CodiceFiscaleCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroCamera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataPrenotazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodoDal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeriodoAl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CaparraConfirmatoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TariffaApplicata)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoSoggiorno)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.CodiceFiscaleCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroCamera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPrenotazione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodoDal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PeriodoAl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaparraConfirmatoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TariffaApplicata)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoSoggiorno)
+            </td>
+            <td>
+                  <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a> |
+
+                    <a class="btn btn-danger" onclick="deletePrenotazione(@item.ID)">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section scripts {
+
+
+
+    <script>
+        function deletePrenotazione(id) {
+            if (confirm("Sicuro di voler eliminare la Prenotazione?")) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Prenotazioni")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.success) {
+                            location.reload();
+                        } else {
+                            alert('Errore nell eliminazione');
+                        }
+                    },
+                    error: function (err) {
+                        alert('Error: ' + err.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+
+
+    }
+
+                    

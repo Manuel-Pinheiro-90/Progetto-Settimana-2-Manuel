@@ -175,34 +175,31 @@ namespace Progetto_Settimana_2_Manuel.DAO
         // /////////////////////////////////////////// DELETE ///////////////////////////////////////////////////////
         public void Delete(int id)
         {
-            using (var conn = _dbService.GetConnection())
-            {
+            using var conn = _dbService.GetConnection();
+            
                 conn.Open();
-                using (var transaction = conn.BeginTransaction())
-                {
+            using var transaction = conn.BeginTransaction();
+                
                     try
                     {
-                        using (var command = _dbService.GetCommand(conn, DELETE_CLIENTE))
-                        {
+                    using var command = _dbService.GetCommand(conn, DELETE_CLIENTE);
+                        
                             command.Transaction = transaction;
                             command.Parameters.Add(new SqlParameter("@ID", id));
                             command.ExecuteNonQuery();
                             transaction.Commit();
-                        }
+                        
                     }
-                    catch (Exception ex)
+                    catch (Exception )
                     {
                         transaction.Rollback();
 
-                        Console.WriteLine(ex.Message);
+                        
                         throw;
                     }
-                    finally
-                    {
-                        conn.Close();
-                    }
-                }
-            }
+                  
+                
+            
 
         }
 

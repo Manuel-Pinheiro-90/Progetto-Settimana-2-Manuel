@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Progetto_Settimana_2_Manuel.Models.Servizio>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prezzo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descrizione)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prezzo)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a> |
+
+                    <a class="btn btn-danger" onclick="deleteServizio(@item.ID)">Delete</a>
+              
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+            
+@section scripts{
+
+
+   
+    <script>
+        function deleteServizio(id) {
+            if (confirm("Sicuro di voler eliminare il servizio?")) {
+                $.ajax({
+                    url: '@Url.Action("Delete", "Servizi")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        if (result.success) {
+                            location.reload();
+                        } else {
+                            alert('Errore nell eliminazione');
+                        }
+                    },
+                    error: function (err) {
+                        alert('Error: ' + err.responseText);
+                    }
+                });
+            }
+        }
+    </script>
+
+   
+
+
+
+}

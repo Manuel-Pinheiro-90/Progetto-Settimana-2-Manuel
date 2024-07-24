@@ -13,14 +13,14 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             _clienteDAO = clienteDAO;
         }
 
-        /// GET: Clienti
+        /// /////////////////////////////////////////////////////////////////////////////////////////// GET: Clienti
         public IActionResult Index()
         {
             var clienti = _clienteDAO.GetAll();
             return View(clienti);
         }
 
-        // GET: Clienti/Details/5
+        // /////////////////////////////////////////////////////////////////////////////////////////// GET: Clienti/Details/5
         public IActionResult Details(int id)
         {
             var cliente = _clienteDAO.GetById(id);
@@ -31,13 +31,13 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(cliente);
         }
 
-        // GET: Clienti/Create
+        // /////////////////////////////////////////////////////////////////////////////////////////// GET: Clienti/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Clienti/Create
+        // /////////////////////////////////////////////////////////////////////////////////////////// POST: Clienti/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Cliente cliente)
@@ -50,7 +50,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(cliente);
         }
 
-        // GET: Clienti/Edit/5
+        // /////////////////////////////////////////////////////////////////////////////////////////// GET: Clienti/Edit/5
         public IActionResult Edit(int id)
         {
             var cliente = _clienteDAO.GetById(id);
@@ -61,7 +61,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(cliente);
         }
 
-        // POST: Clienti/Edit/5
+        // /////////////////////////////////////////////////////////////////////////////////////////// POST: Clienti/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Cliente cliente)
@@ -95,8 +95,8 @@ namespace Progetto_Settimana_2_Manuel.Controllers
 
 
 
-        // POST: Clienti/Delete/5
-        
+        // /////////////////////////////////////////////////////////////////////////////////////////// POST: Clienti/Delete/5
+
 
 
         [HttpPost]

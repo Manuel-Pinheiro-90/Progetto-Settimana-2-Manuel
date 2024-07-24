@@ -4,8 +4,9 @@
     {
         public int ID { get; set; }
         public int CodiceFiscaleCliente { get; set; }
+       
         public int NumeroCamera { get; set; }
-        public DateTime DatePrenotazione { get; set; }
+        public DateTime DataPrenotazione { get; set; }
         public int Anno { get; set; }
         public DateTime PeriodoDal  { get; set; }
         public DateTime PeriodoAl { get; set; }
