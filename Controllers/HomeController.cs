@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Progetto_Settimana_2_Manuel.Models;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
         {
             _logger = logger;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             return View();
