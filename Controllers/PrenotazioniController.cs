@@ -22,7 +22,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             _prenotazioneServizioDAO = prenotazioneServizioDAO;
         }
 
-        // GET: Prenotazioni/Index
+        // ////////////////////////////////////////////////////////////////////// GET: Prenotazioni/Index
         public IActionResult Index()
         {
             var prenotazioni = _prenotazioneDAO.GetAll();
@@ -56,7 +56,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(riepilogoList);
         }
 
-        // GET: Prenotazioni/Create
+        // //////////////////////////////////////////////////////////////////////GET: Prenotazioni/Create
         public IActionResult Create()
         {
             var viewModel = new PrenotazioneViewModel
@@ -68,7 +68,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(viewModel);
         }
 
-        // POST: Prenotazioni/Create
+        // //////////////////////////////////////////////////////////////////////POST: Prenotazioni/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PrenotazioneViewModel viewModel)
@@ -105,13 +105,10 @@ namespace Progetto_Settimana_2_Manuel.Controllers
                 return RedirectToAction(nameof(Index));
             
 
-            viewModel.Clienti = _clienteDAO.GetAll();
-            viewModel.Camere = _cameraDAO.GetAll();
-            viewModel.Servizi = _servizioDAO.GetAll();
-            return View(viewModel);
+            
         }
 
-        // GET: Prenotazioni/Checkout/5
+        // //////////////////////////////////////////////////////////////////////GET: Prenotazioni/Checkout/5
         public IActionResult Checkout(int id)
         {
             var prenotazione = _prenotazioneDAO.GetById(id);

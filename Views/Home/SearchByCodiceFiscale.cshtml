@@ -1,11 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Progetto_Settimana_2_Manuel.Models.Prenotazione>
+
+@{
+    ViewData["Title"] = "Ricerca per Codice Fiscale";
 }
 
-<h1>Benvenuti nel Sistema di Gestione Prenotazioni</h1>
+<h2>Ricerca per Codice Fiscale</h2>
 
-<h2>Ricerca Prenotazioni per Codice Fiscale</h2>
-<form asp-action="SearchByCodiceFiscale" method="post">
+<form asp-action="SearchByCodiceFiscale" method="get">
     <div class="form-group">
         <label for="codiceFiscale">Codice Fiscale</label>
         <input type="text" class="form-control" id="codiceFiscale" name="codiceFiscale" required />
@@ -13,14 +14,9 @@
     <button type="submit" class="btn btn-primary">Cerca</button>
 </form>
 
-@if (ViewBag.ErrorMessage != null)
+@if (Model != null && Model.Any())
 {
-    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
-}
-
-@if (ViewBag.Prenotazioni != null)
-{
-    <h3>Risultati della Ricerca:</h3>
+    <h3>Risultati della ricerca:</h3>
     <table class="table">
         <thead>
             <tr>
@@ -34,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var prenotazione in ViewBag.Prenotazioni)
+            @foreach (var prenotazione in Model)
             {
                 <tr>
                     <td>@prenotazione.CodiceFiscaleCliente</td>
@@ -49,13 +45,7 @@
         </tbody>
     </table>
 }
-
-<h2>Numero Prenotazioni Pensione Completa</h2>
-<form asp-action="CountPensioneCompleta" method="get">
-    <button type="submit" class="btn btn-primary">Visualizza Conteggio</button>
-</form>
-
-@if (ViewBag.CountPensioneCompleta != null)
+else
 {
-    <p>Il numero totale di prenotazioni per i soggiorni di tipo “pensione completa” è: @ViewBag.CountPensioneCompleta</p>
+    <p>Nessuna prenotazione trovata per il codice fiscale fornito.</p>
 }
