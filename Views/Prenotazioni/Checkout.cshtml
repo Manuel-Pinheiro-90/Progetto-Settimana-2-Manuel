@@ -1,0 +1,50 @@
+﻿@model Progetto_Settimana_2_Manuel.Models.PrenotazioneCompletaViewModel
+
+@{
+    ViewData["Title"] = "Dettaglio Prenotazione";
+}
+
+<h2>Dettaglio Prenotazione</h2>
+
+<div>
+    <h3>Informazioni sulla Camera</h3>
+    <p>Numero di Stanza: @Model.Camera.Numero</p>
+    <p>Descrizione: @Model.Camera.Descrizione</p>
+    <p>Periodo: @Model.PeriodoDal.ToString("dd/MM/yyyy") - @Model.PeriodoAl.ToString("dd/MM/yyyy")</p>
+    <p>Tariffa Applicata: @Model.TariffaApplicata €</p>
+    <p>Caparra Confirmatoria: @Model.CaparraConfirmatoria €</p>
+</div>
+
+<div>
+    <h3>Servizi Aggiuntivi</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Descrizione</th>
+                <th>Quantità</th>
+                <th>Prezzo Unitario (€)</th>
+                <th>Totale (€)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var servizio in Model.ServiziAggiuntivi)
+            {
+                <tr>
+                    <td>@servizio.DescrizioneServizio</td>
+                    <td>@servizio.Quantita</td>
+                    <td>@servizio.Prezzo</td>
+                    <td>@(servizio.Quantita * servizio.Prezzo)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <h3>Importo da Saldare</h3>
+    <p>@ViewBag.ImportoDaSaldare €</p>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Torna alla Lista Prenotazioni</a>
+</div>

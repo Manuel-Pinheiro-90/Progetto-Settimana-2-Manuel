@@ -28,7 +28,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             var result = new List<Servizio>();
 
-            using var conn = _dbService.GetConnection();
+           var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var command = _dbService.GetCommand(conn, GET_ALL_SERVIZI);
@@ -57,7 +57,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             Servizio servizio = null;
 
-            using var conn = _dbService.GetConnection();
+             var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var command = _dbService.GetCommand(conn, GET_SERVIZIO_BY_ID);
@@ -86,37 +86,38 @@ namespace Progetto_Settimana_2_Manuel.DAO
         // /////////////////////////////////////////// ADD ///////////////////////////////////////////////////////
         public void Add(Servizio servizio)
         {
-            using var conn = _dbService.GetConnection();
+           var conn = _dbService.GetConnection();
             
                 conn.Open();
                 using var transaction = conn.BeginTransaction();
                 {
-                    try
-                    {
-                        using var command = _dbService.GetCommand(conn, CREATE_SERVIZIO);
-                        
-                            command.Transaction = transaction;
-                            command.Parameters.Add(new SqlParameter("@Descrizione", servizio.Descrizione));
-                            command.Parameters.Add(new SqlParameter("@Prezzo", servizio.Prezzo));
+                try
+                {
+                    using var command = _dbService.GetCommand(conn, CREATE_SERVIZIO);
 
-                            servizio.ID = (int)command.ExecuteScalar();
-                            transaction.Commit();
-                        
-                    }
-                    catch (Exception )
-                    {
-                        transaction.Rollback();
-                       
-                        throw;
-                    }
-                   
+                    command.Transaction = transaction;
+                    command.Parameters.Add(new SqlParameter("@Descrizione", servizio.Descrizione));
+                    command.Parameters.Add(new SqlParameter("@Prezzo", servizio.Prezzo));
+
+                    servizio.ID = (int)command.ExecuteScalar();
+                    transaction.Commit();
+
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+
+                    throw;
+                }
+                finally { conn.Close(); }
+
                 }
             
         }
         // /////////////////////////////////////////// UPDATE ///////////////////////////////////////////////////////
         public void Update(Servizio servizio)
         {
-            using var conn = _dbService.GetConnection();
+             var conn = _dbService.GetConnection();
             
                 conn.Open();
                 using var transaction = conn.BeginTransaction();
@@ -147,7 +148,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         // /////////////////////////////////////////// DELETE ///////////////////////////////////////////////////////
         public void Delete(int id)
         {
-            using var conn = _dbService.GetConnection();
+            var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var transaction = conn.BeginTransaction();

@@ -1,94 +1,69 @@
-﻿@model IEnumerable<Progetto_Settimana_2_Manuel.Models.Prenotazione>
+﻿@model IEnumerable<Progetto_Settimana_2_Manuel.Models.PrenotazioneCompletaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Riepilogo Prenotazioni";
 }
 
-<h1>Index</h1>
+<h1>Riepilogo Prenotazioni</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
-
 </p>
+
 <table class="table">
     <thead>
         <tr>
-          
-          <th>
-                @Html.DisplayNameFor(model => model.CodiceFiscaleCliente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroCamera)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataPrenotazione)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Anno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PeriodoDal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PeriodoAl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CaparraConfirmatoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TariffaApplicata)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoSoggiorno)
-            </th>
-            <th></th>
+            <th>Prenotazione ID</th>
+            <th>Codice Fiscale Cliente</th>
+            <th>Nome Cliente</th>
+            <th>Cognome Cliente</th>
+            <th>Numero Camera</th>
+            <th>Descrizione Camera</th>
+            <th>Data Prenotazione</th>
+            <th>Periodo Dal</th>
+            <th>Periodo Al</th>
+            <th>Caparra Confirmatoria</th>
+            <th>Tariffa Applicata</th>
+            <th>Tipo Soggiorno</th>
+            <th>Servizi Aggiuntivi</th>
+            <th>Azioni</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.CodiceFiscaleCliente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroCamera)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataPrenotazione)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Anno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PeriodoDal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PeriodoAl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CaparraConfirmatoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TariffaApplicata)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoSoggiorno)
-            </td>
-            <td>
-                  <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a> |
-
-                    <a class="btn btn-danger" onclick="deletePrenotazione(@item.ID)">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.PrenotazioneId</td>
+                <td>@item.Cliente.CodiceFiscale</td>
+                <td>@item.Cliente.Nome</td>
+                <td>@item.Cliente.Cognome</td>
+                <td>@item.Camera.Numero</td>
+                <td>@item.Camera.Descrizione</td>
+                <td>@item.DataPrenotazione.ToString("dd/MM/yyyy")</td>
+                <td>@item.PeriodoDal.ToString("dd/MM/yyyy")</td>
+                <td>@item.PeriodoAl.ToString("dd/MM/yyyy")</td>
+                <td>@item.CaparraConfirmatoria</td>
+                <td>@item.TariffaApplicata</td>
+                <td>@item.TipoSoggiorno</td>
+                <td>
+                    <ul>
+                        @foreach (var servizio in item.ServiziAggiuntivi)
+                        {
+                            <li>@servizio.DescrizioneServizio - Quantità: @servizio.Quantita, Prezzo: @servizio.Prezzo €</li>
+                        }
+                    </ul>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PrenotazioneId" class="btn btn-warning">Edit</a> |
+                    <a asp-action="Checkout" asp-route-id="@item.PrenotazioneId" class="btn btn-info">Checkout</a> |
+                    <a class="btn btn-danger" onclick="deletePrenotazione(@item.PrenotazioneId)">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
 @section scripts {
-
-
-
     <script>
         function deletePrenotazione(id) {
             if (confirm("Sicuro di voler eliminare la Prenotazione?")) {
@@ -110,8 +85,4 @@
             }
         }
     </script>
-
-
-    }
-
-                    
+}

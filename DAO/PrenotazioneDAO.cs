@@ -21,7 +21,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                                                    "VALUES (@CodiceFiscaleCliente, @NumeroCamera, @DataPrenotazione, @Anno, @PeriodoDal, @PeriodoAl, @CaparraConfirmatoria, @TariffaApplicata, @TipoSoggiorno)";
         private const string UPDATE_PRENOTAZIONE = "UPDATE Prenotazioni SET CodiceFiscaleCliente = @CodiceFiscaleCliente, NumeroCamera = @NumeroCamera, DataPrenotazione = @DataPrenotazione, Anno = @Anno, PeriodoDal = @PeriodoDal, PeriodoAl = @PeriodoAl, CaparraConfirmatoria = @CaparraConfirmatoria, TariffaApplicata = @TariffaApplicata, TipoSoggiorno = @TipoSoggiorno WHERE ID = @ID";
         private const string DELETE_PRENOTAZIONE = "DELETE FROM Prenotazioni WHERE ID = @ID";
-
+        private const string DELETE_PRENOTAZIONE_SERVIZI = "DELETE FROM PrenotazioniServizi WHERE NumeroPrenotazione = @NumeroPrenotazione";
 
 
 
@@ -32,7 +32,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             var result = new List<Prenotazione>();
 
-            using var conn = _dbService.GetConnection();
+             var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var command = _dbService.GetCommand(conn, GET_ALL_PRENOTAZIONI);
@@ -66,7 +66,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             Prenotazione prenotazione = null;
 
-            using var conn = _dbService.GetConnection();
+            var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var command = _dbService.GetCommand(conn, GET_PRENOTAZIONE_BY_ID);
@@ -102,7 +102,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         // /////////////////////////////////////////// ADD ///////////////////////////////////////////////////////
         public void Add(Prenotazione prenotazione)
         {
-            using var conn = _dbService.GetConnection();
+           var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var transaction = conn.BeginTransaction();
@@ -132,8 +132,9 @@ namespace Progetto_Settimana_2_Manuel.DAO
                         
                         throw;
                     }
-                
-                }
+                finally { conn.Close(); }
+
+            }
             
         }
 
@@ -185,24 +186,35 @@ namespace Progetto_Settimana_2_Manuel.DAO
             {
                 conn.Open();
                 using var transaction = conn.BeginTransaction();
-                
-                    try
+                try
+                {
+                    // Elimina i servizi associati alla prenotazione
+                    using (var command = _dbService.GetCommand(conn, DELETE_PRENOTAZIONE_SERVIZI))
                     {
-                    using var command = _dbService.GetCommand(conn, DELETE_PRENOTAZIONE);
-                        
-                            command.Transaction = transaction;
-                            command.Parameters.Add(new SqlParameter("@ID", id));
-                            command.ExecuteNonQuery();
-                            transaction.Commit();
-                        
+                        command.Transaction = transaction;
+                        command.Parameters.Add(new SqlParameter("@NumeroPrenotazione", id));
+                        command.ExecuteNonQuery();
                     }
-                    catch (Exception )
+
+                    // Elimina la prenotazione
+                    using (var command = _dbService.GetCommand(conn, DELETE_PRENOTAZIONE))
                     {
-                        transaction.Rollback();
-                        
-                        throw;
+                        command.Transaction = transaction;
+                        command.Parameters.Add(new SqlParameter("@ID", id));
+                        command.ExecuteNonQuery();
                     }
-                   
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
         }
 

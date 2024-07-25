@@ -33,12 +33,12 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             var result = new List<Camera>();
 
-            using (var conn = _dbService.GetConnection())
+            var conn = _dbService.GetConnection();
             {
                 conn.Open();
-                using (var command = _dbService.GetCommand(conn, GET_ALL_CAMERE))
-                using (var reader = command.ExecuteReader())
-                {
+                using var command = _dbService.GetCommand(conn, GET_ALL_CAMERE);
+                using var reader = command.ExecuteReader();
+                
                     while (reader.Read())
                     {
                         result.Add(new Camera
@@ -49,7 +49,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                             Tipologia = reader.GetString(3)
                         });
                     }
-                }
+                
                 conn.Close();
             }
 
@@ -61,15 +61,15 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             Camera camera = null;
 
-            using (var conn = _dbService.GetConnection())
+            var conn = _dbService.GetConnection();
             {
                 conn.Open();
-                using (var command = _dbService.GetCommand(conn, GET_CAMERA_BY_ID))
+                using var command = _dbService.GetCommand(conn, GET_CAMERA_BY_ID);
                 {
                     command.Parameters.Add(new SqlParameter("@ID", id));
 
-                    using (var reader = command.ExecuteReader())
-                    {
+                    using var reader = command.ExecuteReader();
+                    
                         if (reader.Read())
                         {
                             camera = new Camera
@@ -80,7 +80,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                                 Tipologia = reader.GetString(3)
                             };
                         }
-                    }
+                    
                 }
                 conn.Close();
             }
@@ -90,7 +90,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         // /////////////////////////////////////////// ADD ///////////////////////////////////////////////////////
         public void Add(Camera camera)
         {
-            using var conn = _dbService.GetConnection();
+            var conn = _dbService.GetConnection();
             
                 conn.Open();
             using var transaction = conn.BeginTransaction();

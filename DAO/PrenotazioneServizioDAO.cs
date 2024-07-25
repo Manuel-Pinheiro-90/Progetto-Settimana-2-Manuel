@@ -1,4 +1,5 @@
-﻿using Progetto_Settimana_2_Manuel.Models;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Progetto_Settimana_2_Manuel.Models;
 using Progetto_Settimana_2_Manuel.Service;
 using System.Data.SqlClient;
 
@@ -28,7 +29,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             var result = new List<PrenotazioneServizio>();
 
-            using var conn = _dbService.GetConnection();
+             var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var command = _dbService.GetCommand(conn, GET_ALL_PRENOTAZIONI_SERVIZI);
@@ -86,39 +87,38 @@ namespace Progetto_Settimana_2_Manuel.DAO
         // /////////////////////////////////////////// ADD ///////////////////////////////////////////////////////
         public void Add(PrenotazioneServizio prenotazioneServizio)
         {
-            using var conn = _dbService.GetConnection();
+            var conn = _dbService.GetConnection();
+            try
             {
                 conn.Open();
                 using var transaction = conn.BeginTransaction();
+                try
                 {
-                    try
-                    {
-                        using var command = _dbService.GetCommand(conn, CREATE_PRENOTAZIONE_SERVIZIO);
-                        
-                            command.Transaction = transaction;
-                            command.Parameters.Add(new SqlParameter("@NumeroPrenotazione", prenotazioneServizio.NumeroPrenotazione));
-                            command.Parameters.Add(new SqlParameter("@ServizioID", prenotazioneServizio.ServizioID));
-                            command.Parameters.Add(new SqlParameter("@Data", prenotazioneServizio.Data));
-                            command.Parameters.Add(new SqlParameter("@Quantita", prenotazioneServizio.Quantita));
+                    using var command = _dbService.GetCommand(conn, CREATE_PRENOTAZIONE_SERVIZIO);
+                    command.Transaction = transaction;
+                    command.Parameters.Add(new SqlParameter("@NumeroPrenotazione", prenotazioneServizio.NumeroPrenotazione));
+                    command.Parameters.Add(new SqlParameter("@ServizioID", prenotazioneServizio.ServizioID));
+                    command.Parameters.Add(new SqlParameter("@Data", prenotazioneServizio.Data));
+                    command.Parameters.Add(new SqlParameter("@Quantita", prenotazioneServizio.Quantita));
 
-                            prenotazioneServizio.ID = (int)command.ExecuteScalar();
-                            transaction.Commit();
-                        
-                    }
-                    catch (Exception )
-                    {
-                        transaction.Rollback();
-                       
-                        throw;
-                    }
-                   
+                    prenotazioneServizio.ID = (int)command.ExecuteScalar();
+                    transaction.Commit();
                 }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+            finally
+            {
+                conn.Close();
             }
         }
         // /////////////////////////////////////////// UPDATE ///////////////////////////////////////////////////////
         public void Update(PrenotazioneServizio prenotazioneServizio)
         {
-            using var conn = _dbService.GetConnection();
+             var conn = _dbService.GetConnection();
             {
                 conn.Open();
                 using var transaction = conn.BeginTransaction();

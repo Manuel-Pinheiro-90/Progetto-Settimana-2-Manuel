@@ -28,11 +28,11 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             var result = new List<Cliente>();
 
-            using (var conn = _dbService.GetConnection())
+             var conn = _dbService.GetConnection();
             {
                 conn.Open();
-                using (var command = _dbService.GetCommand(conn, GET_ALL_CLIENTI))
-                using (var reader = command.ExecuteReader())
+                using var command = _dbService.GetCommand(conn, GET_ALL_CLIENTI);
+                using var reader = command.ExecuteReader();
                 {
                     while (reader.Read())
                     {
@@ -64,15 +64,15 @@ namespace Progetto_Settimana_2_Manuel.DAO
         {
             Cliente cliente = null;
 
-            using (var conn = _dbService.GetConnection())
+            var conn = _dbService.GetConnection();
             {
                 conn.Open();
-                using (var command = _dbService.GetCommand(conn, GET_CLIENTE_BY_ID))
+                using var command = _dbService.GetCommand(conn, GET_CLIENTE_BY_ID);
                 {
                     command.Parameters.Add(new SqlParameter("@ID", id));
 
-                    using (var reader = command.ExecuteReader())
-                    {
+                    using var reader = command.ExecuteReader();
+                    
                         if (reader.Read())
                         {
                             cliente = new Cliente
@@ -88,7 +88,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                                 Cellulare = reader.IsDBNull(8) ? null : reader.GetString(8)
                             };
                         }
-                    }
+                    
                 }
                 conn.Close();
             }
@@ -100,7 +100,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
 
         public void Add(Cliente cliente)
         {
-            using var conn = _dbService.GetConnection();
+             var conn = _dbService.GetConnection();
             conn.Open();
             using var transaction = conn.BeginTransaction();
 
@@ -132,14 +132,14 @@ namespace Progetto_Settimana_2_Manuel.DAO
 
         public void Update(Cliente cliente)
         {
-            using (var conn = _dbService.GetConnection())
+            var conn = _dbService.GetConnection();
             {
                 conn.Open();
-                using (var transaction = conn.BeginTransaction())
-                {
+                using var transaction = conn.BeginTransaction();
+                
                     try
                     {
-                        using (var command = _dbService.GetCommand(conn, UPDATE_CLIENTE))
+                        using var command = _dbService.GetCommand(conn, UPDATE_CLIENTE);
                         {
                             command.Transaction = transaction;
                             command.Parameters.Add(new SqlParameter("@ID", cliente.ID));
@@ -167,7 +167,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                     {
                         conn.Close();
                     }
-                }
+                
             }
         }
 
