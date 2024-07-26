@@ -2,60 +2,60 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Benvenuti nel Sistema di Gestione Prenotazioni</h1>
+<h1>Ricerca Prenotazioni per Codice Fiscale</h1>
+<input type="text" id="codiceFiscale" placeholder="Inserisci Codice Fiscale">
+<button id="searchButton">Cerca</button>
+<div id="results"></div>
 
-<h2>Ricerca Prenotazioni per Codice Fiscale</h2>
-<form asp-action="SearchByCodiceFiscale" method="post">
-    <div class="form-group">
-        <label for="codiceFiscale">Codice Fiscale</label>
-        <input type="text" class="form-control" id="codiceFiscale" name="codiceFiscale" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Cerca</button>
-</form>
+<h1>Contatore Prenotazioni con Pensione Completa</h1>
+<button id="countButton">Conta</button>
+<div id="countResult"></div>
 
-@if (ViewBag.ErrorMessage != null)
-{
-    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
-}
+@section scripts {
+  
+    <script>
+        $(document).ready(function () {
+            $('#searchButton').click(function () {
+                var codiceFiscale = $('#codiceFiscale').val();
+                $.ajax({
+                    url: `/api/PrenotazioniApi/SearchByCodiceFiscale`,
+                    type: 'GET',
+                    data: { codiceFiscale: codiceFiscale },
+                    success: function (data) {
+                        if (data.message) {
+                            $('#results').text(data.message);
+                        } else {
+                            $('#results').empty();
+                            $.each(data, function (index, prenotazione) {
+                                $('#results').append(`<p>Prenotazione ID: ${prenotazione.id}, Tipo Soggiorno: ${prenotazione.tipoSoggiorno}</p>`);
+                            });
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
 
-@if (ViewBag.Prenotazioni != null)
-{
-    <h3>Risultati della Ricerca:</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Numero Camera</th>
-                <th>Data Prenotazione</th>
-                <th>Periodo Dal</th>
-                <th>Periodo Al</th>
-                <th>Tariffa Applicata</th>
-                <th>Tipo Soggiorno</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var prenotazione in ViewBag.Prenotazioni)
-            {
-                <tr>
-                    <td>@prenotazione.CodiceFiscaleCliente</td>
-                    <td>@prenotazione.NumeroCamera</td>
-                    <td>@prenotazione.DataPrenotazione.ToShortDateString()</td>
-                    <td>@prenotazione.PeriodoDal.ToShortDateString()</td>
-                    <td>@prenotazione.PeriodoAl.ToShortDateString()</td>
-                    <td>@prenotazione.TariffaApplicata</td>
-                    <td>@prenotazione.TipoSoggiorno</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-<h2>Numero Prenotazioni Pensione Completa</h2>
-<form asp-action="CountPensioneCompleta" method="get">
-    <button type="submit" class="btn btn-primary">Visualizza Conteggio</button>
-</form>
-
-@if (ViewBag.CountPensioneCompleta != null)
-{
-    <p>Il numero totale di prenotazioni per i soggiorni di tipo “pensione completa” è: @ViewBag.CountPensioneCompleta</p>
+            $('#countButton').click(function () {
+                $.ajax({
+                    url: `/api/PrenotazioniApi/CountPensioneCompleta`,
+                    type: 'GET',
+                    success: function (data) {
+                        $('#countResult').text(`Numero di prenotazioni con pensione completa: ${data.count}`);
+                        if (data.clienti && data.clienti.length > 0) {
+                            $('#countResult').append('<ul>');
+                            $.each(data.clienti, function (index, cliente) {
+                                $('#countResult').append(`<li>${cliente.nome} ${cliente.cognome} (Codice Fiscale: ${cliente.codiceFiscale})</li>`);
+                            });
+                            $('#countResult').append('</ul>');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+        });
+    </script>
 }
