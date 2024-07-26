@@ -11,11 +11,15 @@ namespace Progetto_Settimana_2_Manuel.Controllers
     {
         private readonly IPrenotazioneDAO _prenotazioneDAO;
         private readonly IClienteDAO _clienteDAO;
+        private readonly IServizioDAO _servizioDAO;
+        private readonly IPrenotazioneServizioDAO _prenotazioneServizioDAO;
 
-        public PrenotazioniApiController(IPrenotazioneDAO prenotazioneDAO, IClienteDAO clienteDAO)
+        public PrenotazioniApiController(IPrenotazioneDAO prenotazioneDAO, IClienteDAO clienteDAO, IServizioDAO servizioDAO, IPrenotazioneServizioDAO prenotazioneServizioDAO)
         {
             _prenotazioneDAO = prenotazioneDAO;
             _clienteDAO = clienteDAO;
+            _servizioDAO = servizioDAO;
+            _prenotazioneServizioDAO = prenotazioneServizioDAO;
         }
 
         [HttpGet("SearchByCodiceFiscale")]
@@ -27,7 +31,28 @@ namespace Progetto_Settimana_2_Manuel.Controllers
                 return NotFound(new { Message = "Cliente non trovato" });
             }
 
-            var prenotazioni = _prenotazioneDAO.GetAll().Where(p => p.CodiceFiscaleCliente == cliente.ID).ToList();
+            var prenotazioni = _prenotazioneDAO.GetAll()
+                .Where(p => p.CodiceFiscaleCliente == cliente.ID)
+                .Select(p => new
+                {
+                    p.ID,
+                    p.TipoSoggiorno,
+                    p.DataPrenotazione,
+                    p.PeriodoDal,
+                    p.PeriodoAl,
+                    p.CaparraConfirmatoria,
+                    p.TariffaApplicata,
+                    p.NumeroCamera,
+                    ServiziAggiuntivi = _prenotazioneServizioDAO.GetAll()
+                        .Where(ps => ps.NumeroPrenotazione == p.ID)
+                        .Select(ps => new
+                        {
+                            DescrizioneServizio = _servizioDAO.GetById(ps.ServizioID).Descrizione,
+                            Quantita = ps.Quantita,
+                            Prezzo = _servizioDAO.GetById(ps.ServizioID).Prezzo
+                        }).ToList()
+                }).ToList();
+
             return Ok(prenotazioni);
         }
 

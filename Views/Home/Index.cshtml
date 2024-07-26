@@ -70,8 +70,20 @@
                                 $('#results').append(
                                     `<div class="card mt-2">
                                                 <div class="card-body">
-                                                    <p class="card-text">Prenotazione ID: ${prenotazione.id}</p>
+                                                    <h5 class="card-title">Prenotazione ID: ${prenotazione.id}</h5>
                                                     <p class="card-text">Tipo Soggiorno: ${prenotazione.tipoSoggiorno}</p>
+                                                    <p class="card-text">Data Prenotazione: ${new Date(prenotazione.dataPrenotazione).toLocaleDateString()}</p>
+                                                    <p class="card-text">Periodo Dal: ${new Date(prenotazione.periodoDal).toLocaleDateString()}</p>
+                                                    <p class="card-text">Periodo Al: ${new Date(prenotazione.periodoAl).toLocaleDateString()}</p>
+                                                    <p class="card-text">Caparra Confirmatoria: ${prenotazione.caparraConfirmatoria}</p>
+                                                    <p class="card-text">Tariffa Applicata: ${prenotazione.tariffaApplicata}</p>
+                                                    <p class="card-text">Numero Camera: ${prenotazione.numeroCamera}</p>
+                                                    <p class="card-text">Servizi Aggiuntivi:</p>
+                                                    <ul>
+                                                        ${prenotazione.serviziAggiuntivi.map(servizio =>
+                                        `<li>${servizio.descrizioneServizio} - Quantità: ${servizio.quantita}, Prezzo: ${servizio.prezzo} €</li>`
+                                    ).join('')}
+                                                    </ul>
                                                 </div>
                                             </div>`
                                 );

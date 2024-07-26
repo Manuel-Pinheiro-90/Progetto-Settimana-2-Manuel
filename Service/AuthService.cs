@@ -59,15 +59,6 @@ namespace Progetto_Settimana_2_Manuel.Service
 
 
 
-
-
-           
-
-
-
-
-
-
         }
 
 
@@ -76,6 +67,8 @@ namespace Progetto_Settimana_2_Manuel.Service
         private const string INSERT_USER = "INSERT INTO Users(Username, PasswordHash) OUTPUT INSERTED.IdUser VALUES(@username, @passwordHash)";
         private readonly IPasswordEncoder _passwordEncoder;
       
+
+        // //////////////Non ho aggiunto la possibilità di dare ruoli agli utenti deve essere dato tramite data base.
 
         public Utente CreateUser(Utente user)
         {
