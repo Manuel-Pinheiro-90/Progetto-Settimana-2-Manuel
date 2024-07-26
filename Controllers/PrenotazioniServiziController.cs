@@ -110,7 +110,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(prenotazioneServizio);
         }
 
-        // POST: PrenotazioniServizi/Delete/5
+        // POST PrenotazioniServizi  Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

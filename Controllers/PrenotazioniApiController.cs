@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Progetto_Settimana_2_Manuel.DAO;
-using Progetto_Settimana_2_Manuel.Models;
-using System.Linq;
+
 
 namespace Progetto_Settimana_2_Manuel.Controllers
 {
