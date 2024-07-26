@@ -12,15 +12,27 @@ namespace Progetto_Settimana_2_Manuel.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IPrenotazioneDAO _prenotazioneDAO;
         private readonly IClienteDAO _clienteDAO;
-        public HomeController(ILogger<HomeController> logger, IPrenotazioneDAO prenotazioneDAO, IClienteDAO clienteDAO)
+        private readonly ICameraDAO _cameraDAO;
+        private readonly IServizioDAO _servizioDAO;
+
+        public HomeController(ILogger<HomeController> logger, IPrenotazioneDAO prenotazioneDAO, IClienteDAO clienteDAO, ICameraDAO cameraDAO, IServizioDAO servizioDAO)
         {
             _logger = logger;
              _prenotazioneDAO = prenotazioneDAO;
             _clienteDAO = clienteDAO;
+            _cameraDAO = cameraDAO;
+            _servizioDAO = servizioDAO;
+
+
         }
        
         public IActionResult Index()
         {
+            ViewBag.TotalPrenotazioni = _prenotazioneDAO.GetAll().Count();
+            ViewBag.TotalClienti = _clienteDAO.GetAll().Count();
+            ViewBag.TotalCamere = _cameraDAO.GetAll().Count();
+            ViewBag.TotalServizi = _servizioDAO.GetAll().Count();
+
             return View();
         }
 

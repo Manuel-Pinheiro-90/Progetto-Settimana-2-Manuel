@@ -6,53 +6,25 @@
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
-
 </p>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Numero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descrizione)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipologia)
-            </th>
-            
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Numero)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descrizione)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tipologia)
-                </td>
-         
-                <td>
-                   
-                   
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Camera @Html.DisplayFor(modelItem => item.Numero)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(modelItem => item.Tipologia)</h6>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Descrizione)</p>
                     <a class="btn btn-danger" onclick="deleteCamera(@item.ID)">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
 @section scripts {
-
-
-
     <script>
         function deleteCamera(id) {
             if (confirm("Sicuro di voler eliminare la Camera?")) {
@@ -74,9 +46,4 @@
             }
         }
     </script>
-
-
-
-
-
 }

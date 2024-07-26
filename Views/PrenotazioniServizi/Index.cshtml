@@ -9,63 +9,33 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumeroPrenotazione)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServizioID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantita)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroPrenotazione)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServizioID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantita)
-            </td>
-            <td>
-                    
 
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Prenotazione Servizio ID: @item.ID</h5>
+                    <p class="card-text">
+                        <strong>Numero Prenotazione:</strong> @item.NumeroPrenotazione <br />
+                        <strong>Servizio ID:</strong> @item.ServizioID <br />
+                        <strong>Data:</strong> @item.Data.ToString("dd/MM/yyyy") <br />
+                        <strong>Quantità:</strong> @item.Quantita <br />
+                    </p>
                     <a class="btn btn-danger" onclick="deletePrenotazioneServizio(@item.ID)">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
 @section scripts {
-
-
-
     <script>
         function deletePrenotazioneServizio(id) {
-            if (confirm("Sicuro di voler eliminare prenotazione servizio?")) {
+            if (confirm("Sicuro di voler eliminare la prenotazione del servizio?")) {
                 $.ajax({
-                    url: '@Url.Action("Delete", "PrenotaziniServizi")',
+                    url: '@Url.Action("Delete", "PrenotazioniServizi")',
                     type: 'POST',
                     data: { id: id },
                     success: function (result) {
@@ -76,15 +46,10 @@
                         }
                     },
                     error: function (err) {
-                        alert('Servizio è legato ad una : ' + err.responseText);
+                        alert('Servizio è legato a una prenotazione: ' + err.responseText);
                     }
                 });
             }
         }
     </script>
-
-
-
-
-
 }

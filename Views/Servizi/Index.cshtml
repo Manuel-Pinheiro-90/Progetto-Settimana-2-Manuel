@@ -9,49 +9,26 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descrizione)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prezzo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descrizione)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prezzo)
-            </td>
-            <td>
-                    
 
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Servizio ID: @item.ID</h5>
+                    <p class="card-text">
+                        <strong>Descrizione:</strong> @item.Descrizione <br />
+                        <strong>Prezzo:</strong> @item.Prezzo €<br />
+                    </p>
                     <a class="btn btn-danger" onclick="deleteServizio(@item.ID)">Delete</a>
-              
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-            
-@section scripts{
-
-
-   
+@section scripts {
     <script>
         function deleteServizio(id) {
             if (confirm("Sicuro di voler eliminare il servizio?")) {
@@ -73,9 +50,4 @@
             }
         }
     </script>
-
-   
-
-
-
 }

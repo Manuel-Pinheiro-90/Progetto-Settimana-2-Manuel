@@ -1,10 +1,101 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Admin";
+}
 
-<ul>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Camere" asp-action="Index">Camere</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Servizi" asp-action="Index">Servizi</a>
-</li>
-</ul>
+<div class="container">
+    <h1 class="my-4">Admin Dashboard</h1>
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Gestione Camere</h4>
+                    <p class="card-text">Visualizza e gestisci tutte le camere dell'hotel.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Camere" asp-action="Index" class="btn btn-primary">Vai alle Camere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Gestione Clienti</h4>
+                    <p class="card-text">Visualizza e gestisci tutti i clienti registrati.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Clienti" asp-action="Index" class="btn btn-primary">Vai ai Clienti</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Gestione Prenotazioni</h4>
+                    <p class="card-text">Visualizza e gestisci tutte le prenotazioni effettuate.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Prenotazioni" asp-action="Index" class="btn btn-primary">Vai alle Prenotazioni</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title">Gestione Servizi</h4>
+                    <p class="card-text">Visualizza e gestisci tutti i servizi aggiuntivi offerti.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Servizi" asp-action="Index" class="btn btn-primary">Vai ai Servizi</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="my-4">Azioni rapide</h2>
+    <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100 bg-info text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Aggiungi una nuova Camera</h4>
+                    <p class="card-text">Crea una nuova camera per l'hotel.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Camere" asp-action="Create" class="btn btn-light">Aggiungi Camera</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100 bg-warning text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Aggiungi un nuovo Cliente</h4>
+                    <p class="card-text">Registra un nuovo cliente.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Clienti" asp-action="Create" class="btn btn-light">Aggiungi Cliente</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100 bg-success text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Crea una nuova Prenotazione</h4>
+                    <p class="card-text">Registra una nuova prenotazione.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Prenotazioni" asp-action="Create" class="btn btn-light">Crea Prenotazione</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card h-100 bg-danger text-white">
+                <div class="card-body">
+                    <h4 class="card-title">Aggiungi un nuovo Servizio</h4>
+                    <p class="card-text">Crea un nuovo servizio aggiuntivo.</p>
+                </div>
+                <div class="card-footer">
+                    <a asp-area="" asp-controller="Servizi" asp-action="Create" class="btn btn-light">Aggiungi Servizio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

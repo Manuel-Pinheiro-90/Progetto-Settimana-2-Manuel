@@ -10,79 +10,29 @@
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodiceFiscale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cognome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Citta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Provincia)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cellulare)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CodiceFiscale)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cognome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Citta)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Provincia)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cellulare)
-                </td>
-                <td>
-                    |
-                   
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Cognome) @Html.DisplayFor(modelItem => item.Nome)</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Codice Fiscale: @Html.DisplayFor(modelItem => item.CodiceFiscale)</h6>
+                    <p class="card-text">
+                        <strong>Città:</strong> @Html.DisplayFor(modelItem => item.Citta) <br />
+                        <strong>Provincia:</strong> @Html.DisplayFor(modelItem => item.Provincia) <br />
+                        <strong>Email:</strong> @Html.DisplayFor(modelItem => item.Email) <br />
+                        <strong>Telefono:</strong> @Html.DisplayFor(modelItem => item.Telefono) <br />
+                        <strong>Cellulare:</strong> @Html.DisplayFor(modelItem => item.Cellulare) <br />
+                    </p>
                     <a class="btn btn-danger" onclick="deleteCliente(@item.ID)">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-
-@section scripts{
-
-
-   
+@section scripts {
     <script>
         function deleteCliente(id) {
             if (confirm("Sicuro di voler eliminare il cliente?")) {
@@ -104,9 +54,4 @@
             }
         }
     </script>
-
-   
-
-
-
 }
