@@ -190,16 +190,25 @@ namespace Progetto_Settimana_2_Manuel.DAO
                             transaction.Commit();
                         
                     }
-                    catch (Exception )
+                    catch (SqlException ex)
                     {
                         transaction.Rollback();
+                if(ex.Number == 547)
 
-                        
-                        throw;
+                    { 
+                        throw new InvalidOperationException ("Impossibile cancellare Clienti con Prenotazione");
                     }
-                  
-                
-            
+                else
+                {
+                    throw;
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+
 
         }
 

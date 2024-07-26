@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Progetto_Settimana_2_Manuel.DAO;
 using Progetto_Settimana_2_Manuel.Models;
+using System.Linq.Expressions;
 
 namespace Progetto_Settimana_2_Manuel.Controllers
 {
@@ -102,10 +103,20 @@ namespace Progetto_Settimana_2_Manuel.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _clienteDAO.Delete(id);
-            return Json(new { success = true });
+            try
+            {
+                _clienteDAO.Delete(id);
+                return Json(new { success = true });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, message = "Si è verificato un errore imprevisto." });
+            }
         }
-
 
 
 

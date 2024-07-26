@@ -29,8 +29,10 @@ namespace Progetto_Settimana_2_Manuel.Service
                 conn.Open();
                 using var cmd = new SqlCommand(LOGIN_COMMAND, conn);
                 cmd.Parameters.AddWithValue("@username", username);
-                cmd.Parameters.AddWithValue("@password", password);
+                var EncodedPass = _passwordEncoder.Encode(password);
+                cmd.Parameters.AddWithValue("@password", EncodedPass);
                 using var reader = cmd.ExecuteReader();
+                
                 if (reader.Read())
                 {
                     var utente = new Utente

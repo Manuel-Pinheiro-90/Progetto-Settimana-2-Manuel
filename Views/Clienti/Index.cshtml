@@ -69,7 +69,7 @@
                     @Html.DisplayFor(modelItem => item.Cellulare)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-warning">Edit</a> |
+                    |
                    
                     <a class="btn btn-danger" onclick="deleteCliente(@item.ID)">Delete</a>
                 </td>
@@ -94,7 +94,7 @@
                         if (result.success) {
                             location.reload();
                         } else {
-                            alert('Errore nell eliminazione');
+                            alert(result.message);
                         }
                     },
                     error: function (err) {
