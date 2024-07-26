@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Progetto_Settimana_2_Manuel.DAO;
 using Progetto_Settimana_2_Manuel.Models;
 using System.Linq.Expressions;
 
 namespace Progetto_Settimana_2_Manuel.Controllers
 {
+    [Authorize]
     public class ClientiController : Controller
     {
         private readonly IClienteDAO _clienteDAO;

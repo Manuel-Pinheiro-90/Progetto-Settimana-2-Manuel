@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Progetto_Settimana_2_Manuel.DAO;
 using Progetto_Settimana_2_Manuel.Models;
 
 namespace Progetto_Settimana_2_Manuel.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CamereController : Controller
     {
         private readonly ICameraDAO _cameraDAO;

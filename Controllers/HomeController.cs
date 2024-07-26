@@ -24,6 +24,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Admin()
         {
             return View();
