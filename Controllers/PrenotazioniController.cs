@@ -22,7 +22,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             _prenotazioneServizioDAO = prenotazioneServizioDAO;
         }
 
-        // ////////////////////////////////////////////////////////////////////// GET: Prenotazioni/Index
+        // ////////////////////////////////////////////////////////////////////// GET Prenotazioni Index
         public IActionResult Index()
         {
             var prenotazioni = _prenotazioneDAO.GetAll();
@@ -56,7 +56,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(riepilogoList);
         }
 
-        // //////////////////////////////////////////////////////////////////////GET: Prenotazioni/Create
+        // //////////////////////////////////////////////////////////////////////GET Prenotazioni Create
         public IActionResult Create()
         {
             var viewModel = new PrenotazioneViewModel
@@ -68,7 +68,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(viewModel);
         }
 
-        // //////////////////////////////////////////////////////////////////////POST: Prenotazioni/Create
+        // //////////////////////////////////////////////////////////////////////POST Prenotazioni Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(PrenotazioneViewModel viewModel)
@@ -108,7 +108,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             
         }
 
-        // //////////////////////////////////////////////////////////////////////GET: Prenotazioni/Checkout/5
+        // //////////////////////////////////////////////////////////////////////GET Prenotazioni Checkout
         public IActionResult Checkout(int id)
         {
             var prenotazione = _prenotazioneDAO.GetById(id);
@@ -153,7 +153,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
 
 
 
-        // /////////////////////////////////////////////////////////////////////////////////////////// POST: Clienti/Delete/5
+        // /////////////////////////////////////////////////////////////////////////////////////////// POST Clienti Delete
 
 
 

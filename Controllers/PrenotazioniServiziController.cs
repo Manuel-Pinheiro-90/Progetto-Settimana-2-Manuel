@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Progetto_Settimana_2_Manuel.DAO;
 using Progetto_Settimana_2_Manuel.Models;
 
@@ -7,20 +8,21 @@ namespace Progetto_Settimana_2_Manuel.Controllers
     public class PrenotazioniServiziController : Controller
     {
         private readonly IPrenotazioneServizioDAO _prenotazioneServizioDAO;
-
-        public PrenotazioniServiziController(IPrenotazioneServizioDAO prenotazioneServizioDAO)
+        private readonly IServizioDAO _servizioDAO;
+        public PrenotazioniServiziController(IPrenotazioneServizioDAO prenotazioneServizioDAO, IServizioDAO servizioDAO)
         {
             _prenotazioneServizioDAO = prenotazioneServizioDAO;
+            _servizioDAO = servizioDAO;
         }
 
-        // //////////////////////////////////////////////////////////////////////////////////// GET: PrenotazioniServizi
+        // //////////////////////////////////////////////////////////////////////////////////// GET PrenotazioniServizi
         public IActionResult Index()
         {
             var prenotazioniServizi = _prenotazioneServizioDAO.GetAll();
             return View(prenotazioniServizi);
         }
 
-        /////////////////////////////////////////////////////////////////////////GET: PrenotazioniServizi/Details/5
+        /////////////////////////////////////////////////////////////////////////GET PrenotazioniServizi Details
         public IActionResult Details(int id)
         {
             var prenotazioneServizio = _prenotazioneServizioDAO.GetById(id);
@@ -31,9 +33,11 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(prenotazioneServizio);
         }
 
-        // //////////////////////////////////////////////////////////////////////////////////// GET: PrenotazioniServizi/Create
+        // //////////////////////////////////////////////////////////////////////////////////// GET PrenotazioniServizi Create
         public IActionResult Create()
         {
+            var servizi = _servizioDAO.GetAll();
+            ViewBag.Servizi = new SelectList(servizi, "ID", "Descrizione");
             return View();
         }
 
@@ -50,7 +54,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(prenotazioneServizio);
         }
 
-        /////////////////////////////////////////////////////////GET: PrenotazioniServizi/Edit/5
+        /////////////////////////////////////////////////////////GET PrenotazioniServizi Edit
         public IActionResult Edit(int id)
         {
             var prenotazioneServizio = _prenotazioneServizioDAO.GetById(id);
@@ -93,7 +97,7 @@ namespace Progetto_Settimana_2_Manuel.Controllers
             return View(prenotazioneServizio);
         }
 
-        //////////////////////////////////////////////////////////////////GET: PrenotazioniServizi/Delete/5
+        //////////////////////////////////////////////////////////////////GET PrenotazioniServizi Delete
         public IActionResult Delete(int id)
         {
             var prenotazioneServizio = _prenotazioneServizioDAO.GetById(id);

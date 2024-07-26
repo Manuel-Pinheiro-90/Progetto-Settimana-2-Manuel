@@ -188,7 +188,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                 using var transaction = conn.BeginTransaction();
                 try
                 {
-                    // Elimina i servizi associati alla prenotazione
+                    //  servizi associati alla prenotazione
                     using (var command = _dbService.GetCommand(conn, DELETE_PRENOTAZIONE_SERVIZI))
                     {
                         command.Transaction = transaction;
@@ -196,7 +196,7 @@ namespace Progetto_Settimana_2_Manuel.DAO
                         command.ExecuteNonQuery();
                     }
 
-                    // Elimina la prenotazione
+                    //  prenotazione
                     using (var command = _dbService.GetCommand(conn, DELETE_PRENOTAZIONE))
                     {
                         command.Transaction = transaction;

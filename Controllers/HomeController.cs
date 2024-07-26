@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace Progetto_Settimana_2_Manuel.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,13 +18,18 @@ namespace Progetto_Settimana_2_Manuel.Controllers
              _prenotazioneDAO = prenotazioneDAO;
             _clienteDAO = clienteDAO;
         }
-        [Authorize]
+       
         public IActionResult Index()
         {
             return View();
         }
 
-        
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
+
 
         public IActionResult Privacy()
         {
